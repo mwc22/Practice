@@ -53,5 +53,61 @@ public class Algorithms {
 		}
 		return sorted;
 	}
+	
+	public static int[] quickSort(int[] parent){
+		int[] array = new int[parent.length];
+		for (int i=0; i<parent.length; i++){
+			array[i] = parent[i];
+		}
+		if (array.length > 1){
+			int pivot = array[array.length/2];
+			int i = 0;
+			int j = array.length-1;
+			while (i < j){
+				if ((array[i] >= pivot)&&(array[j] <= pivot)){
+					int hi = array[i];
+					int lo = array[j];
+					array[i] = lo;
+					array[j] = hi;
+					i++;
+					j--;
+				}
+				else if (array[i] < pivot){
+					i++;
+				}
+				else {
+					j--;
+				}
+			}
+			
+			int[] l,r;
+			if (array[i] < pivot){
+				l = Arrays.copyOfRange(array,0,i+1);
+				r = Arrays.copyOfRange(array,i+1,array.length);
+			}
+			else {
+				l = Arrays.copyOfRange(array,0,i);
+				r = Arrays.copyOfRange(array,i,array.length);
+			}
+			
+			return concatenate(quickSort(l),quickSort(r));
+			
+		}
+		else {
+			return array;
+		}		
+	}
+
+	private static int[] concatenate(int[] left, int[] right) {
+		int[] whole = new int[left.length+right.length];
+		int i;
+		for (i=0; i<left.length; i++){
+			whole[i] = left[i];
+		}
+		for (int j=0; j<right.length; j++){
+			whole[i+j] = right[j];
+		}
+		return whole;
+	}
 
 }
